@@ -1,5 +1,8 @@
 package uk.ac.cam.ss2249.virtualos.cpu;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by sam on 01/05/15.
  */
@@ -21,29 +24,31 @@ public class Instruction{
     }
 
     static Instruction decodeInstruction(String ins){
+        Pattern p = Pattern.compile("\\t([a-z]+)\\t?(.*)");
+        Matcher m = p.matcher(ins);
+
+        if(m.find()){
+            int count = m.groupCount();
+            System.out.println("group count is "+count);
+            String code = m.group(1);
+            String operandsRaw = m.groupCount() >= 2 ? m.group(3) : "";
+            String[] operands = operandsRaw.split(", ");
+            Operand[] operandsA = new Operand[operands.length];
+            for(int i=0; i<operands.length; i++){
+                operandsA[i] = new Operand(operands[i]);
+            }
+            return new Instruction(OpCode.valueOf(code.toUpperCase()), operandsA);
+        }
+        return null;
+    }
+
+    static Instruction decodeInstruction2(String ins){
         String[] split = ins.split(" ");
         Operand[] op = new Operand[split.length - 1];
         for(int i=1; i<split.length; i++){
-            op[i-1] = new Operand(split[i].charAt(0) == 'r', Integer.parseInt(split[i].substring(1)));
+            op[i-1] = new Operand(split[i]);
         }
         return new Instruction(OpCode.valueOf(split[0].toUpperCase()), op);
     }
 
-    public static class Operand{
-        private boolean isRegister;
-        private int value;
-
-        Operand(boolean r, int v){
-            isRegister = r;
-            value = v;
-        }
-
-        public boolean isRegister() {
-            return isRegister;
-        }
-
-        public int getValue() {
-            return value;
-        }
-    }
 }

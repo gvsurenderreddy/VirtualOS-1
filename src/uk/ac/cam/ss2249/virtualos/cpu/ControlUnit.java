@@ -23,6 +23,10 @@ public class ControlUnit {
         fetch();
     }
 
+    public Program getProgram(){
+        return cProgram;
+    }
+
     public void fetch(){
         int pci = RegisterFile.getInstance().getProgramCounter().readInt();
         String instructionString = cProgram.instructionAtAddress(pci);

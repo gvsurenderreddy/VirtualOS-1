@@ -35,7 +35,7 @@ public class MultiplierUnit extends FunctionalUnit {
         long result = a * b;
         int high = (int) (result >> 32);
         int low = (int) (result & ((1L << 33)-1L));
-        RegisterFile.getInstance().getRegister(operands[0].getValue()).writeInt(high);
-        RegisterFile.getInstance().getRegister(operands[1].getValue()).writeInt(low);
+        RegisterFile.getInstance().getRegister(operands[0].getRegisterName()).writeInt(high);
+        RegisterFile.getInstance().getRegister(operands[1].getRegisterName()).writeInt(low);
     }
 }

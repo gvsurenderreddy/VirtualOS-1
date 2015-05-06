@@ -1,19 +1,17 @@
 package uk.ac.cam.ss2249.virtualos.cpu;
 
+import java.util.HashMap;
+
 /**
  * Created by sam on 01/05/15.
  */
 public class RegisterFile {
     private static RegisterFile instance;
-    private static int NUM_REGISTERS = 50;
     private static int REGISTER_SIZE = 32;
-    private Register[] registers;
+    private HashMap<String, Register> registers;
 
     private RegisterFile(){
-        registers = new Register[NUM_REGISTERS];
-        for(int i=0; i<registers.length; i++){
-            registers[i] = new Register(REGISTER_SIZE);
-        }
+        registers = new HashMap<String, Register>();
     }
 
     public static RegisterFile getInstance(){
@@ -23,12 +21,15 @@ public class RegisterFile {
         return instance;
     }
 
-    public Register getRegister(int index){
-        return registers[index];
+    public Register getRegister(String name){
+        if(!registers.containsKey(name)){
+            registers.put(name, new Register(32));
+        }
+        return registers.get(name);
     }
 
     public Register getProgramCounter(){
-        return registers[registers.length - 1];
+        return registers.get("pc");
     }
 
     public class Register{

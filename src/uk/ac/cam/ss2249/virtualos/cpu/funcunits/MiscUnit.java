@@ -1,6 +1,7 @@
 package uk.ac.cam.ss2249.virtualos.cpu.funcunits;
 
 import uk.ac.cam.ss2249.virtualos.cpu.Instruction;
+import uk.ac.cam.ss2249.virtualos.cpu.Operand;
 import uk.ac.cam.ss2249.virtualos.cpu.RegisterFile;
 
 /**
@@ -35,16 +36,16 @@ public class MiscUnit extends FunctionalUnit {
         }
     }
 
-    private void mov(Instruction.Operand[] operands){
+    private void mov(Operand[] operands){
         int n = getValue(operands[1]);
-        RegisterFile.getInstance().getRegister(operands[0].getValue()).writeInt(n);
+        RegisterFile.getInstance().getRegister(operands[0].getRegisterName()).writeInt(n);
     }
 
-    private void pi(Instruction.Operand[] operands){
-        System.out.println(RegisterFile.getInstance().getRegister(operands[0].getValue()).readInt());
+    private void pi(Operand[] operands){
+        System.out.println(RegisterFile.getInstance().getRegister(operands[0].getRegisterName()).readInt());
     }
 
-    private void pb(Instruction.Operand[] operands){
-        System.out.println(RegisterFile.getInstance().getRegister(operands[0].getValue()));
+    private void pb(Operand[] operands){
+        System.out.println(RegisterFile.getInstance().getRegister(operands[0].getRegisterName()));
     }
 }

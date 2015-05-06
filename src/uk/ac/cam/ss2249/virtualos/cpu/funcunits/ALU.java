@@ -55,7 +55,7 @@ public class ALU extends FunctionalUnit{
                 break;
         }
         if(instruction.getOperands()[0].isRegister()){
-            RegisterFile.getInstance().getRegister(instruction.getOperands()[0].getValue()).writeInt(d);
+            RegisterFile.getInstance().getRegister(instruction.getOperands()[0].getRegisterName()).writeInt(d);
         }
     }
 

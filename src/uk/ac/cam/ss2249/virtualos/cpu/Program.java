@@ -7,16 +7,14 @@ import java.util.ArrayList;
  * Created by sam on 01/05/15.
  */
 public class Program {
-    private static final int HEAP_SIZE = 1024;
+    private static final int MEMORY_SIZE = 1024;
 
     private String[] instructions;
-    private byte[] heap;
-    private int heapPointer;
+    private byte[] memory;
 
     Program(String[] i){
         instructions = i;
-        heap = new byte[HEAP_SIZE];
-        heapPointer = 0;
+        memory = new byte[MEMORY_SIZE];
     }
 
     public static Program programFromFile(String filename) throws IOException {
@@ -28,6 +26,18 @@ public class Program {
             return null;
         }
         return instructions[address];
+    }
+
+    public byte getMem(int address){
+        return memory[address];
+    }
+
+    public int getMemInt(int address){
+        int n = 0;
+        for(int i=0; i<4; i++){
+            n |= (getMem(address + i) << (i*8));
+        }
+        return n;
     }
 
     private static Program programFromReader(Reader reader) throws IOException {
